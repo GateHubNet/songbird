@@ -44,3 +44,20 @@ If you need persistent storage for database mount directory into `/flare/db`
 ```
 docker run -d -p 9650:9650 -p 9651:9651 -e SGB_NODE_TYPE=pruning -e SGB_LOG_LEVEL=info -v /some/directory:/flare/db --name=songbird ghcr.io/gatehubnet/songbird
 ```
+Using docker-compose
+```
+version: '3.3'
+services:
+    songbird:
+        ports:
+            - '9650:9650'
+            - '9651:9651'
+        environment:
+            - SGB_NODE_TYPE=pruning
+            - SGB_LOG_LEVEL=info
+        volumes:
+            - '/some/directory:/flare/db'
+        container_name: songbird
+        image: ghcr.io/gatehubnet/songbird
+        restart: unless-stopped
+```
