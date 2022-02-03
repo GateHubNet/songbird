@@ -5,8 +5,8 @@
 </p>
 
 # 🕊️ **GateHub containerized SGB node** 🕊️
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gatehubnet/songbird/Docker%20Test?color=blue&label=test&style=plastic)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gatehubnet/songbird/Docker%20Image?style=plastic&logo=docker&color=blue)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gatehubnet/songbird/Docker%20Test?style=plastic&logo=docker&color=blue)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/gatehubnet/songbird?label=latest&style=plastic)
 ![GitHub top language](https://img.shields.io/github/languages/top/gatehubnet/songbird?color=blue&style=plastic)
 ![GitHub](https://img.shields.io/github/license/gatehubnet/songbird?color=blue&style=plastic)
