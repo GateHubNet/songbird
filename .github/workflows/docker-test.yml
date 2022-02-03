@@ -6,11 +6,6 @@ on:
       - feature/*
       - feat/*
       - fix/*
-  pull_request:
-    branches:
-      - feature/*
-      - feat/*
-      - fix/*
   workflow_dispatch:
 
 env:
