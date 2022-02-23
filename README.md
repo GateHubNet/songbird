@@ -19,7 +19,7 @@ Custom built songbird container image from [Flare Foundation Repo](https://githu
 
 Information about how Flare works at the network-level is available at [Flare Docs](https://docs.flare.network/en/).
 
-Built on latest Alpine or Ubuntu base. 
+Built on latest Alpine or Ubuntu base. Latest tag always refers to latest Alpine build.
 
 ### **Ports exposed:**
 - `9650/tcp - http port`
@@ -27,12 +27,12 @@ Built on latest Alpine or Ubuntu base.
 ---
 ### **Run with docker**
 ```
-docker run -d -p 9650:9650 -p 9651:9651 --name=songbird ghcr.io/gatehubnet/songbird:alpine|ubuntu
+docker run -d -p 9650:9650 -p 9651:9651 --name=songbird ghcr.io/gatehubnet/songbird:alpine
 ```
 If you need persistent storage for database mount directory into `/flare/.flare/db`
 
 ```
-docker run -d -p 9650:9650 -p 9651:9651 -v /some/directory:/flare/.flare/db --name=songbird ghcr.io/gatehubnet/songbird:alpine|ubuntu
+docker run -d -p 9650:9650 -p 9651:9651 -v /some/directory:/flare/.flare/db --name=songbird ghcr.io/gatehubnet/songbird
 ```
 Using docker-compose
 ```
@@ -45,6 +45,6 @@ services:
         volumes:
             - '/some/directory:/flare/.flare/db'
         container_name: songbird
-        image: ghcr.io/gatehubnet/songbird:alpine|ubuntu
+        image: ghcr.io/gatehubnet/songbird
         restart: unless-stopped
 ```
