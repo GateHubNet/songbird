@@ -29,7 +29,7 @@ COPY --from=builder /flare/scripts/ /flare/scripts
 
 WORKDIR /flare
 
-COPY songbird.sh.new /flare/songbird.sh
+COPY songbird.sh /flare/songbird.sh
 RUN chmod +x /flare/songbird.sh
 
 CMD /flare/songbird.sh
