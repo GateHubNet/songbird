@@ -1,0 +1,41 @@
+###############
+# Build stage #
+###############
+FROM ubuntu as builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH=$PATH:/usr/local/go/bin
+
+RUN apt update && apt upgrade -y
+RUN apt install -y git gcc g++ curl jq
+RUN curl -L -s -o go1.17.7.linux-amd64.tar.gz https://go.dev/dl/go1.17.7.linux-amd64.tar.gz
+RUN rm -rf /usr/local/go && tar -C /usr/local -xvf go1.17.7.linux-amd64.tar.gz
+RUN rm go1.17.7.linux-amd64.tar.gz
+
+WORKDIR /
+RUN git clone https://github.com/flare-foundation/flare.git
+WORKDIR /flare
+RUN git switch --detach v0.5.2
+
+RUN ./scripts/build.sh
+
+#################
+# Cleanup stage #
+#################
+FROM ubuntu as execution
+
+ENV PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
+ENV HOME="/flare"
+
+RUN apt update && apt upgrade -y
+RUN apt install -y curl jq
+
+COPY --from=builder /flare/build/ /flare
+COPY --from=builder /flare/scripts/ /flare/scripts
+
+WORKDIR /flare
+
+COPY songbird.sh /flare/songbird.sh
+RUN chmod +x /flare/songbird.sh
+
+CMD /flare/songbird.sh

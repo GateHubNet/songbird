@@ -15,40 +15,24 @@ Containerized image for songbird node with canary network
 
 ## **Description**
 
-Custom built songbird container image from [Flare Network Repo](https://gitlab.com/flarenetwork/flare).
+Custom built songbird container image from [Flare Foundation Repo](https://github.com/flare-foundation/flare).
 
 Information about how Flare works at the network-level is available at [Flare Docs](https://docs.flare.network/en/).
 
-Built on latest Ubuntu base. 
+Built on latest Alpine or Ubuntu base. 
 
 ### **Ports exposed:**
-- 9650/tcp - http port
-- 9651/tcp - staking port
-
-
-### **Custom variables**
-Image supports variables for setting SGB node type and log level verbosity. Variables are optional and without them defaults will be used.
-
-🔵 **SGB_NODE_TYPE**
-```
-- SGB_NODE_TYPE=pruning - pruning node (enabled by default)
-- SGB_NODE_TYPE=full - full node
-```
-
-🔵 **SGB_LOG_LEVEL**
-```
-- SGB_LOG_LEVEL=info - informative log output (enabled by default)
-- SGB_LOG_LEVEL=debug - detailed log output
-```
+- `9650/tcp - http port`
+- `9651/tcp - staking port`
 ---
 ### **Run with docker**
 ```
-docker run -d -p 9650:9650 -p 9651:9651 -e SGB_NODE_TYPE=pruning -e SGB_LOG_LEVEL=info --name=songbird ghcr.io/gatehubnet/songbird
+docker run -d -p 9650:9650 -p 9651:9651 --name=songbird ghcr.io/gatehubnet/songbird:alpine|ubuntu
 ```
-If you need persistent storage for database mount directory into `/flare/db`
+If you need persistent storage for database mount directory into `/flare/.flare/db`
 
 ```
-docker run -d -p 9650:9650 -p 9651:9651 -e SGB_NODE_TYPE=pruning -e SGB_LOG_LEVEL=info -v /some/directory:/flare/db --name=songbird ghcr.io/gatehubnet/songbird
+docker run -d -p 9650:9650 -p 9651:9651 -v /some/directory:/flare/.flare/db --name=songbird ghcr.io/gatehubnet/songbird:alpine|ubuntu
 ```
 Using docker-compose
 ```
@@ -58,12 +42,9 @@ services:
         ports:
             - '9650:9650'
             - '9651:9651'
-        environment:
-            - SGB_NODE_TYPE=pruning
-            - SGB_LOG_LEVEL=info
         volumes:
-            - '/some/directory:/flare/db'
+            - '/some/directory:/flare/.flare/db'
         container_name: songbird
-        image: ghcr.io/gatehubnet/songbird
+        image: ghcr.io/gatehubnet/songbird:alpine|ubuntu
         restart: unless-stopped
 ```
