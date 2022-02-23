@@ -39,6 +39,9 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Check version
+        run: echo "VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -o 'v[0-9.]\+')" >> $GITHUB_ENV
+
       - name: Build alpine docker image
         uses: docker/build-push-action@v2
         with:
@@ -60,8 +63,8 @@ jobs:
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           tags: |
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-alpine
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-alpine
 
   docker-publish-ubuntu:
     runs-on: ubuntu-latest
@@ -92,6 +95,9 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Check version
+        run: echo "VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -o 'v[0-9.]\+')" >> $GITHUB_ENV
+
       - name: Build alpine docker image
         uses: docker/build-push-action@v2
         with:
@@ -113,8 +119,8 @@ jobs:
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           tags: |
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:ubuntu
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-ubuntu
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:ubuntu
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-ubuntu
 
 
 
