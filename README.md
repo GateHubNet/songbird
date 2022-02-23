@@ -109,3 +109,5 @@ The various node APIs can also be enabled and disabled by setting the respective
 ## **FAQ**
 - Version numbering:
   - Version changed from `v1.5.2` to `v0.5.x` since Flare dropped avalanche go version for versioning and used their own starting from `v1.6.5` to `v0.0.1`
+- Database format change
+  - From version `v0.5.2` the default database changed from RocksDB to LevelDB and will need a full resync. ([Flare Fundation Repo Notes](https://github.com/flare-foundation/flare#legacy-version-upgrade))
