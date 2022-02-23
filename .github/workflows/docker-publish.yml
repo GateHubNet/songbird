@@ -65,7 +65,7 @@ jobs:
           push: true
           labels: ${{ steps.meta.outputs.labels }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:alpine
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}-alpine
 
