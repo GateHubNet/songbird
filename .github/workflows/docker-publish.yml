@@ -33,14 +33,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check version
+        run: echo "VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -o 'v[0-9.]\+')" >> $GITHUB_ENV
+
       - name: Extract metadata (tags, labels) for docker
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Check version
-        run: echo "VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -o 'v[0-9.]\+')" >> $GITHUB_ENV
 
       - name: Build alpine docker image
         uses: docker/build-push-action@v2
@@ -89,14 +89,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check version
+        run: echo "VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -o 'v[0-9.]\+')" >> $GITHUB_ENV
+
       - name: Extract metadata (tags, labels) for docker
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Check version
-        run: echo "VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -o 'v[0-9.]\+')" >> $GITHUB_ENV
 
       - name: Build alpine docker image
         uses: docker/build-push-action@v2
@@ -121,9 +121,6 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:ubuntu
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}-ubuntu
-
-
-
 
       # - name: Slack Notification
       #   uses: 8398a7/action-slack@v3
