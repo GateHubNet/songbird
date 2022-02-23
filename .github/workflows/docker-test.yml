@@ -13,7 +13,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  docker-pipeline:
+  docker-test-alpine:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,27 +42,61 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build docker image
+      - name: Build alpine docker image
         uses: docker/build-push-action@v2
         with:
+          file: Dockerfile.alpine
           push: false
           load: true
-          tags: localbuild/testimage:latest
+          tags: localbuild/testimage:alpine
       
       - name: Scan docker image
         uses: anchore/scan-action@v3
         with: 
-          image: localbuild/testimage:latest
+          image: localbuild/testimage:alpine
           fail-build: true
           severity-cutoff: critical
 
-      - name: Slack Notification
-        uses: 8398a7/action-slack@v3
-        if: always()
+  docker-test-ubuntu:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      
+      - name: Set up docker buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to the container registry
+        uses: docker/login-action@v1
         with:
-          status: ${{ job.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,pullRequest
-          author_name: ""
-          text: ""
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Build alpine docker image
+        uses: docker/build-push-action@v2
+        with:
+          file: Dockerfile.ubuntu
+          push: false
+          load: true
+          tags: localbuild/testimage:ubuntu
+      
+      - name: Scan docker image
+        uses: anchore/scan-action@v3
+        with: 
+          image: localbuild/testimage:ubuntu
+          fail-build: true
+          severity-cutoff: critical
