@@ -1,0 +1,20 @@
+name: Notification on PR
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  notify-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Notification 1
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,pullRequest
+          author_name: ""
+          text: ""
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
