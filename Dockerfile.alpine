@@ -9,7 +9,7 @@ RUN apk add --no-cache bash curl git go jq
 WORKDIR /
 RUN git clone https://github.com/flare-foundation/flare.git
 WORKDIR /flare
-RUN git switch --detach v0.5.3
+RUN git switch --detach v0.6.0
 
 RUN ./scripts/build.sh
 
