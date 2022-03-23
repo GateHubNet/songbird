@@ -15,7 +15,7 @@ RUN rm go1.17.7.linux-amd64.tar.gz
 WORKDIR /
 RUN git clone https://github.com/flare-foundation/flare.git
 WORKDIR /flare
-RUN git switch --detach v0.6.0
+RUN git switch --detach v0.6.1
 
 RUN ./scripts/build.sh
 
