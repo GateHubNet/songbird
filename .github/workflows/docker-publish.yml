@@ -105,7 +105,7 @@ jobs:
       # - name: Check version
       #   run: echo "VERSION=$(echo '${{ github.event.head_commit.message }}' | grep -o 'v[0-9.]\+')" >> $GITHUB_ENV
 
-      - name: Build alpine docker image
+      - name: Build ubuntu docker image
         uses: docker/build-push-action@v2
         with:
           file: Dockerfile.ubuntu
