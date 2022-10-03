@@ -13,20 +13,10 @@ RUN rm -rf /usr/local/go && tar -C /usr/local -xvf go1.17.7.linux-amd64.tar.gz
 RUN rm go1.17.7.linux-amd64.tar.gz
 
 WORKDIR /
-RUN git clone https://github.com/flare-foundation/flare.git
+RUN git clone https://github.com/flare-foundation/go-songbird /flare
 WORKDIR /flare
-RUN git switch --detach v0.6.2
+RUN git switch --detach v0.6.3
 
-RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.27.1 \
-    && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
-
-RUN go get github.com/flare-foundation/flare/node \
-    && go get github.com/prometheus/client_golang/prometheus@v1.7.1 \
-    && go get google.golang.org/grpc/reflection@v1.37.0 \
-    && go get google.golang.org/genproto/googleapis/rpc/status@v0.0.0-20200526211855-cb27e3aa2013 \
-    && go get github.com/hashicorp/go-plugin@v1.4.3 \
-    && go get github.com/prometheus/client_model/go@v0.2.0 \
-    && go get github.com/stretchr/testify/mock@v1.7.0
 
 RUN ./scripts/build.sh
 
@@ -35,7 +25,7 @@ RUN ./scripts/build.sh
 #################
 FROM ubuntu as execution
 
-ENV PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
+ENV PS1="\[\033[01;32m\]\u\[\033[01;34m\]@\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
 ENV HOME="/flare"
 
 RUN apt update && apt upgrade -y
