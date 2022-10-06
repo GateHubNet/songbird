@@ -3,13 +3,15 @@
 ###############
 FROM alpine as builder
 
+ENV GOPATH $HOME/go
+
 RUN apk update && apk upgrade
-RUN apk add --no-cache bash curl git go jq
+RUN apk add --no-cache bash curl git go jq rsync
 
 WORKDIR /
 RUN git clone https://github.com/flare-foundation/go-songbird /flare
-WORKDIR /flare
-RUN git switch --detach v0.6.3
+WORKDIR /flare/avalanchego
+RUN git switch --detach v0.6.4
 
 RUN ./scripts/build.sh
 
@@ -24,8 +26,8 @@ ENV HOME="/flare"
 RUN apk update && apk upgrade
 RUN apk add --no-cache bash curl jq
 
-COPY --from=builder /flare/build/ /flare
-COPY --from=builder /flare/scripts/ /flare/scripts
+COPY --from=builder /flare/avalanchego/build/ /flare
+COPY --from=builder /flare/avalanchego/scripts/ /flare/scripts
 
 WORKDIR /flare
 

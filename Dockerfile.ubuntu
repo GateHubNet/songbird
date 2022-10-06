@@ -3,19 +3,20 @@
 ###############
 FROM ubuntu as builder
 
+ENV GOPATH $HOME/go
+
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH=$PATH:/usr/local/go/bin
 
 RUN apt update && apt upgrade -y
-RUN apt install -y git gcc g++ curl jq
-RUN curl -L -s -o go1.17.7.linux-amd64.tar.gz https://go.dev/dl/go1.17.7.linux-amd64.tar.gz
-RUN rm -rf /usr/local/go && tar -C /usr/local -xvf go1.17.7.linux-amd64.tar.gz
-RUN rm go1.17.7.linux-amd64.tar.gz
+RUN apt install -y git gcc g++ curl jq rsync
+RUN curl -L -s -o go1.18.7.linux-amd64.tar.gz https://go.dev/dl/go1.18.7.linux-amd64.tar.gz
+RUN rm -rf /usr/local/go && tar -C /usr/local -xvf go1.18.7.linux-amd64.tar.gz
 
 WORKDIR /
 RUN git clone https://github.com/flare-foundation/go-songbird /flare
-WORKDIR /flare
-RUN git switch --detach v0.6.3
+WORKDIR /flare/avalanchego
+RUN git switch --detach v0.6.4
 
 
 RUN ./scripts/build.sh
@@ -31,8 +32,8 @@ ENV HOME="/flare"
 RUN apt update && apt upgrade -y
 RUN apt install -y curl jq
 
-COPY --from=builder /flare/build/ /flare
-COPY --from=builder /flare/scripts/ /flare/scripts
+COPY --from=builder /flare/avalanchego/build/ /flare
+COPY --from=builder /flare/avalanchego/scripts/ /flare/scripts
 
 WORKDIR /flare
 
