@@ -15,7 +15,7 @@ Containerized image for songbird node with canary network
 
 ## **Description**
 
-Custom built songbird container image from [Flare Foundation Repo](https://github.com/flare-foundation/flare).
+Custom built songbird container image from [Flare Foundation Repo](https://github.com/flare-foundation/go-flare).
 
 Information about how Flare works at the network-level is available at [Flare Docs](https://docs.flare.network/en/).
 
@@ -26,7 +26,7 @@ Built on latest Alpine or Ubuntu base. Latest tag always refers to latest Alpine
 - CPU: Equivalent of 8 AWS vCPU
 - RAM: 16 GiB
 - Storage: 512 GiB
-- OS: Ubuntu 18.04/20.04 or macOS >= 10.15 (Catalina)
+- OS: Ubuntu 22.04 or macOS >= 10.15 (Catalina)
 - Network: Reliable IPv4 or IPv6 network connection, with an open public port.
 
 ### **Ports exposed:**
@@ -63,10 +63,10 @@ ghcr.io/gatehubnet/songbird (latest)
 ghcr.io/gatehubnet/songbird:latest (latest same as above)
 -
 ghcr.io/gatehubnet/songbird:alpine (latest alpine same as :latest tag)
-ghcr.io/gatehubnet/songbird:v0.5.2-alpine (specific version of alpine flavor)
+ghcr.io/gatehubnet/songbird:v0.6.6-alpine (specific version of alpine flavor)
 -
 ghcr.io/gatehubnet/songbird:ubuntu (latest ubuntu flavor)
-ghcr.io/gatehubnet/songbird:v0.5.2-ubuntu (specific version of ubuntu flavor)
+ghcr.io/gatehubnet/songbird:v0.6.6-ubuntu (specific version of ubuntu flavor)
 ```
 
 ## **Pruning & APIs**
@@ -107,6 +107,8 @@ In order to disable pruning and run a full archival node, pruning-enabled should
 The various node APIs can also be enabled and disabled by setting the respective parameters.
 
 ## **FAQ**
+- Songbird upstream repo change:
+  - Since version `v0.6.6` default upstream repo was changed from https://github.com/flare-foundation/go-songbird to https://github.com/flare-foundation/go-flare
 - Version numbering:
   - Version changed from `v1.5.2` to `v0.5.x` since Flare dropped avalanche go version for versioning and used their own starting from `v1.6.5` to `v0.0.1`
 - Database format change
